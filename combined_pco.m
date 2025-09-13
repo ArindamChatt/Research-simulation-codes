@@ -196,17 +196,46 @@ for i = 1:numel(Bm_values_4)
           (Nport * (Pport_4 + (DS_4 + US_4)*1e-9) + Nrack * uplink_power_4);
     P_CO_values_4(i) = P_CO/NT_4 + 8.45;
 end
+% =========================================================================
+% FINAL MAXIMUM-VISIBILITY COMBINED PLOT SECTION
+% This section creates an extremely magnified and bold plot.
+% =========================================================================
 
-% Combined Plot
-figure; grid on; hold on;
-plot(Bm_values_1 / 1e6, P_CO_values_1, 'b-o', 'LineWidth', 2);
-plot(Bm_values_2 / 1e6, P_CO_values_2, 'r-s', 'LineWidth', 2);
-plot(Bm_values_3 / 1e6, P_CO_values_3, 'g-^', 'LineWidth', 2);
-plot(Bm_values_4 / 1e6, P_CO_values_4, 'm-d', 'LineWidth', 2);
+figure('Name', 'Final Maximum-Visibility CO Power Plot'); 
+grid on; 
+hold on;
 
-xlabel('Average Offered Bandwidth per User, B_m (Mbps)');
-ylabel('Central Office Power Consumption (W)');
-title('Combined: Central Office Power Consumption vs. Bandwidth');
-legend('Case 1: 25Gbps, 128 Users', 'Case 2: 50Gbps, 128 Users', ...
-       'Case 3: 25Gbps, 256 Users', 'Case 4: 50Gbps, 256 Users');
+% --- Plot each case with highly magnified styles ---
+% We are increasing LineWidth to 4 and MarkerSize to 12.
+
+% Case 1: 25Gbps, 128 Users (Blue with Circles)
+plot(Bm_values_1 / 1e6, P_CO_values_1, 'b-o', 'LineWidth', 4, ...
+    'MarkerSize', 12, 'MarkerFaceColor', 'b', 'DisplayName', '25Gbps Line Rate, 128 Users');
+
+% Case 2: 50Gbps, 128 Users (Red with Squares)
+plot(Bm_values_2 / 1e6, P_CO_values_2, 'r-s', 'LineWidth', 4, ...
+    'MarkerSize', 12, 'MarkerFaceColor', 'r', 'DisplayName', '50Gbps Line Rate, 128 Users');
+
+% Case 3: 25Gbps, 256 Users (Green with Triangles)
+plot(Bm_values_3 / 1e6, P_CO_values_3, 'g-^', 'LineWidth', 4, ...
+    'MarkerSize', 12, 'MarkerFaceColor', 'g', 'DisplayName', '25Gbps Line Rate, 256 Users');
+    
+% Case 4: 50Gbps, 256 Users (Magenta with Diamonds)
+plot(Bm_values_4 / 1e6, P_CO_values_4, 'm-d', 'LineWidth', 4, ...
+    'MarkerSize', 12, 'MarkerFaceColor', 'm', 'DisplayName', '50Gbps Line Rate, 256 Users');
+
+% --- Labels, Title, and Legend with Maximized Fonts ---
+% We are using even larger, bold fonts for all text elements.
+
+xlabel('Average Offered Bandwidth per User, B_m (Mbps)', 'FontSize', 16, 'FontWeight', 'bold');
+ylabel('Central Office Power Consumption per User (W)', 'FontSize', 16, 'FontWeight', 'bold');
+title('Central Office Power Consumption vs. User Bandwidth Demand', 'FontSize', 18, 'FontWeight', 'bold');
+
+% --- Maximize the Legend ---
+lgd = legend('show', 'Location', 'best', 'FontSize', 16);
+set(lgd, 'FontWeight', 'bold'); 
+
+% --- Maximize the Axes Tick Marks ---
+set(gca, 'FontSize', 16, 'FontWeight', 'bold');
+
 hold off;
